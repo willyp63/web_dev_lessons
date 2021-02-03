@@ -2,7 +2,7 @@
 
 ### Instructions:
 
-- clone the repo
+- `git clone https://github.com/willyp63/web_dev_lessons.git`
 - `cd web_dev_lessons/week1`
 - `open index.html`
 
