@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pokedex</title>
+
+  <!-- CSS -->
+  <style>
+    .random-btn {
+      margin-top: 24px;
+    }
+
+    .pokemon-details {
+      margin-top: 24px;
+
+      max-width: 300px;
+      padding: 8px;
+
+      border: 1px solid black;
+      border-radius: 4px;
+    }
+
+    .pokemon-details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pokemon-details-image {
+      width: 100%;
+      border: 1px solid black;
+      border-radius: 4px;
+    }
+  </style>
+  <!-- CSS -->
+</head>
+
+<body>
+  <!-- HTML -->
+  <form id="search-form">
+    <label>Search:</label>
+    <input id="search-input" />
+  </form>
+  <button class="random-btn" id="random-btn">random</button>
+  <div class="pokemon-details">
+    <div class="pokemon-details-header">
+      <h1 id="pokemon-name"></h1>
+      <h2 id="pokemon-id"></h2>
+    </div>
+    <img class="pokemon-details-image" id="pokemon-img" src="" alt="" />
+    <div id="pokemon-height"></div>
+    <div id="pokemon-weight"></div>
+    <div>Stats:</div>
+    <ul id="pokemon-stats"></ul>
+  </div>
+  <!-- HTML  -->
+
+  <!-- JS  -->
+  <script>
+    const NUM_POKEMON = 899;
+
+    const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
+    const ensureNumDigits = (num, numDigits) => {
+      let result = `${num}`;
+      const numZerosToAdd = Math.max(numDigits - result.length, 0);
+      for (let i = 0; i < numZerosToAdd; i++) {
+        result = `0${result}`;
+      }
+      return result;
+    };
+
+    const queryAPI = (query) => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+          .then(response => response.json())
+          .then(onData);
+      };
+
+    const onData = ({ name, id, height, weight, sprites, stats }) => {
+      document.querySelector('#pokemon-name').textContent = capitalize(name);
+      document.querySelector('#pokemon-id').textContent = `#${ensureNumDigits(id, 3)}`;
+      document.querySelector('#pokemon-height').textContent = `Height: ${height / 10} m`;
+      document.querySelector('#pokemon-weight').textContent = `Weight: ${weight / 10} kg`;
+      document.querySelector('#pokemon-img').src = sprites.front_default;
+
+      const statsEl = document.querySelector('#pokemon-stats');
+      statsEl.innerHTML= '';
+      stats.forEach(({ base_stat, stat: { name }}) => {
+        const statEl = document.createElement('li');
+        statEl.textContent = `${name}: ${base_stat}`;
+        statsEl.appendChild(statEl);
+      });
+    };
+
+    document.querySelector('#search-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      queryAPI(document.querySelector('#search-input').value);
+    });
+
+    document.querySelector('#random-btn').addEventListener('click', (e) => {
+      queryAPI(Math.floor(Math.random() * NUM_POKEMON));
+    });
+  </script>
+  <!-- JS  -->
+</body>
+</html>
