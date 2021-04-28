@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <!-- <link rel="stylesheet" href="reset.css"> -->
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pokedex</title>
+</head>
+
+<body>
+  <!-- HTML -->
+  <form id="search-form">
+    <label>Search:</label>
+    <input type="text" id="search-input" />
+  </form>
+  <button class="random-btn" id="random-btn">random</button>
+  <div class="pokemon-details">
+    <div class="pokemon-class">
+      <h3 id="basic-pokemon">Basic Pokémon</h3>
+    </div>
+    <div class="pokemon-details-header">
+      <h1 id="pokemon-name" class="pokemon-name"></h1>
+      <div class="pokemon-hp-container">
+        <h2 style="color:red;" id="pokemon-hp"></h2>
+        <div class="pokemon-type">
+          <img id="pokemon-type-img" />
+          <img src="imgs/sphere.png" />
+        </div>
+        <div class="pokemon-type" id="pokemon-type2">
+          <img id="pokemon-type2-img" />
+          <img src="imgs/sphere.png" />
+        </div>
+      </div>
+    </div>
+    <img id="pokemon-img" src="" />
+    <div id="pokemon-height"></div>
+    <div id="pokemon-weight"></div>
+    <div>Stats:</div>
+    <ul id="pokemon-stats"></ul>
+  </div>
+  <!-- HTML  -->
+
+  <!-- JS  -->
+  <script>
+    const NUM_POKEMON = 899;
+
+    const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
+    const queryAPI = (query) => {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+        .then(response => response.json())
+        .then((apiResponse) => {
+          console.log(apiResponse);
+
+          document.querySelector('#pokemon-name').textContent = capitalize(apiResponse.name);
+          document.querySelector('#pokemon-hp').textContent = `${apiResponse.stats[0].base_stat} HP`;
+          document.querySelector('#pokemon-height').textContent = `Height: ${apiResponse.height / 10} m`;
+          document.querySelector('#pokemon-weight').textContent = `Weight: ${apiResponse.weight / 10} kg`;
+          document.querySelector('#pokemon-background').src = `imgs/forest_background.gif`;
+          document.querySelector('#pokemon-img').src = apiResponse.sprites.front_default;
+          
+          if (apiResponse.types.length > 1) {
+            document.querySelector('#pokemon-type-img').src = `imgs/${apiResponse.types[0].type.name}.png`;
+            document.querySelector('#pokemon-type2-img').src = `imgs/${apiResponse.types[1].type.name}.png`;
+            document.querySelector('#pokemon-type2').style.display = 'block';
+          } else {
+            document.querySelector('#pokemon-type-img').src = `imgs/${apiResponse.types[0].type.name}.png`;
+            document.querySelector('#pokemon-type2').style.display = 'none';
+          }
+
+          const statsEl = document.querySelector('#pokemon-stats');
+          statsEl.innerHTML = '';
+          apiResponse.stats.forEach(({ base_stat, stat: { name } }) => {
+            const statEl = document.createElement('li');
+            statEl.textContent = `${name}: ${base_stat}`;
+            statsEl.appendChild(statEl);
+          });
+        });
+    };
+
+    document.querySelector('#search-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      queryAPI(document.querySelector('#search-input').value);
+    });
+
+    document.querySelector('#random-btn').addEventListener('click', (e) => {
+      queryAPI(Math.floor(Math.random() * NUM_POKEMON) + 1);
+    });
+
+    queryAPI(Math.floor(Math.random() * NUM_POKEMON) + 1);
+  </script>
+  <!-- JS  -->
+</body>
+</html>
