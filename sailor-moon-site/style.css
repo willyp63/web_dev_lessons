@@ -1,0 +1,61 @@
+body {
+  background-color: #d5cfe1;
+}
+
+.nav-links a {
+  margin: 20px 15px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #afa2ff;
+  overflow: scroll;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.nav img {
+  width: 50px;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+}
+
+.created-by {
+  padding: 10px;
+}
+
+.sailor-scouts {
+  margin-left: 200px;
+  padding: 10px;
+}
+
+.scouts-title {
+  text-align: center;
+}
+
+.scout {
+  background-color: #95f2d9;
+  width: 150px;
+  height: 150px;
+}
+
+.sailor-scouts-row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 50px;
+}
