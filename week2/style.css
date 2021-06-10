@@ -1,24 +1,51 @@
 .green {
-  height: 50px;
   background-color: #037171;
+  height: 250px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .purple {
-  height: 50px;
   background-color: #7D7ABC;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .lime {
-  height: 50px;
   background-color: #8FCB9B;
 }
 
 .pink {
-  height: 50px;
   background-color: #FFAFC5;
 }
 
+.box-1 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.box-2 {
+  display: flex;  
+}
+
 .blue {
-  height: 50px;
   background-color: #2EC0F9;
+  height: 250px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.numbers1 {
+  display: flex;
+}
+
+.numbers2 {
+  display: flex;
+  justify-content: space-evenly;
 }
