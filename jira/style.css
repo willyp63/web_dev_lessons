@@ -1,0 +1,31 @@
+body {
+  background-color: #d5cfe1;
+}
+
+.nav {
+  background-color: #b07bac;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-item {
+  padding: 10px;
+}
+
+.text-input {
+  padding: 10px;
+}
+
+.list {
+  display: flex;
+  margin-top: 75px;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
